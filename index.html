@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kenny &amp; Roommate – Bug Adventure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kenny & Roommate – Bug Adventure</title>
   <style>
     /* Basic styles to remove margins and hide scrollbars */
     body {
@@ -14,13 +14,52 @@
     canvas {
       display: block;
     }
+
+    /* Touch control styles */
+    #touch-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+      touch-action: none;
+    }
+
+    #touch-controls button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Hide mobile controls on larger screens */
+    @media (min-width: 768px) {
+      #touch-controls {
+        display: none;
+      }
+    }
   </style>
   <!-- Load Phaser from a CDN.  Version 3.55.2 is stable as of 2025.  -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-  <!-- Main game code.  -->
-  <script defer src="main.js"></script>
+  <!-- Main game code. Use a relative path so that GitHub Pages serves it correctly. -->
+  <script defer src="./main.js"></script>
 </head>
 <body>
   <!-- The Phaser game instance will automatically create a canvas element here. -->
+
+  <!-- On‑screen controls for touch devices -->
+  <div id="touch-controls">
+    <button id="up">▲</button>
+    <button id="left">◀</button>
+    <button id="craft">C</button>
+    <button id="right">▶</button>
+    <button id="down">▼</button>
+  </div>
 </body>
 </html>
