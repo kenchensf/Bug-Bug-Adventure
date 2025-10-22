@@ -1,6 +1,6 @@
-# Kenny & Roommate – Bug Adventure
+# Kenny & Jimo – Bug Bug Adventure
 
-This repository contains the source code and assets for a tiny browser‑based adventure built with **Phaser 3**.  You play as Kenny (or his roommate) leaving the apartment to explore the city and collect bugs.  Each outing represents a different level – for the MVP you head from your apartment to the park, gather a stick and a bag, craft a bug‑catching net and capture three unique bugs while avoiding bites.  Along the way you can pick up a healing salve to recover from stings.  A scrapbook at the top of the screen shows which bugs you’ve collected.
+This repository contains the source code and assets for a tiny browser‑based adventure built with **Phaser 3**.  You play as Kenny (or his roommate Jimo) leaving the apartment to explore the city and collect bugs.  Each outing represents a different level – for the MVP you head from your apartment to the park, gather a stick and a bag, craft a bug‑catching net and capture three unique bugs while avoiding bites.  Along the way you can pick up a healing salve to recover from stings.  A scrapbook at the top of the screen shows which bugs you’ve collected.
 
 ## Running locally
 
