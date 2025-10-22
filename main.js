@@ -18,28 +18,29 @@ class PreloadScene extends Phaser.Scene {
 
   preload() {
     // Core character sprites (idle/walk for Kenny and roommate)
-    this.load.image('player1_idle', 'assets/player1_idle.png');
-    this.load.image('player1_walk', 'assets/player1_walk.png');
-    this.load.image('player2_idle', 'assets/player2_idle.png');
-    this.load.image('player2_walk', 'assets/player2_walk.png');
+    // Use relative paths with leading ./ so that GitHub Pages resolves them
+    this.load.image('player1_idle', './assets/player1_idle.png');
+    this.load.image('player1_walk', './assets/player1_walk.png');
+    this.load.image('player2_idle', './assets/player2_idle.png');
+    this.load.image('player2_walk', './assets/player2_walk.png');
 
     // Items and tools
-    this.load.image('stick', 'assets/stick.png');
-    this.load.image('bag', 'assets/bag.png');
-    this.load.image('net', 'assets/net.png');
-    this.load.image('jar', 'assets/jar.png');
-    this.load.image('salve', 'assets/salve.png');
+    this.load.image('stick', './assets/stick.png');
+    this.load.image('bag', './assets/bag.png');
+    this.load.image('net', './assets/net.png');
+    this.load.image('jar', './assets/jar.png');
+    this.load.image('salve', './assets/salve.png');
 
     // Bugs (three varieties)
-    this.load.image('bug1', 'assets/bug1.png');
-    this.load.image('bug2', 'assets/bug2.png');
-    this.load.image('bug3', 'assets/bug3.png');
+    this.load.image('bug1', './assets/bug1.png');
+    this.load.image('bug2', './assets/bug2.png');
+    this.load.image('bug3', './assets/bug3.png');
 
     // UI elements
-    this.load.image('heart', 'assets/heart.png');
+    this.load.image('heart', './assets/heart.png');
 
     // Background image
-    this.load.image('background', 'assets/background.png');
+    this.load.image('background', './assets/background.png');
   }
 
   create() {
@@ -144,6 +145,43 @@ class GameScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-C', () => {
       this.craftItems();
     });
+
+    // Touch control setup: define flags for movement and wire up DOM buttons if present
+    this.touchControls = { left: false, right: false, up: false, down: false };
+    const btnLeft = document.getElementById('left');
+    const btnRight = document.getElementById('right');
+    const btnUp = document.getElementById('up');
+    const btnDown = document.getElementById('down');
+    const btnCraft = document.getElementById('craft');
+    const setHold = (button, dir) => {
+      if (!button) return;
+      button.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        this.touchControls[dir] = true;
+      });
+      button.addEventListener('pointerup', (e) => {
+        e.preventDefault();
+        this.touchControls[dir] = false;
+      });
+      button.addEventListener('pointerleave', (e) => {
+        e.preventDefault();
+        this.touchControls[dir] = false;
+      });
+      button.addEventListener('pointercancel', (e) => {
+        e.preventDefault();
+        this.touchControls[dir] = false;
+      });
+    };
+    setHold(btnLeft, 'left');
+    setHold(btnRight, 'right');
+    setHold(btnUp, 'up');
+    setHold(btnDown, 'down');
+    if (btnCraft) {
+      btnCraft.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        this.craftItems();
+      });
+    }
 
     // Collider for picking up items
     this.physics.add.overlap(this.player, this.items, (player, item) => {
@@ -383,10 +421,10 @@ class GameScene extends Phaser.Scene {
     const speed = 120;
     const body = this.player.body;
     body.setVelocity(0);
-    const moveLeft = this.cursors.left.isDown || this.cursors.a.isDown;
-    const moveRight = this.cursors.right.isDown || this.cursors.d.isDown;
-    const moveUp = this.cursors.up.isDown || this.cursors.w.isDown;
-    const moveDown = this.cursors.down.isDown || this.cursors.s.isDown;
+    const moveLeft = this.cursors.left.isDown || this.cursors.a.isDown || this.touchControls.left;
+    const moveRight = this.cursors.right.isDown || this.cursors.d.isDown || this.touchControls.right;
+    const moveUp = this.cursors.up.isDown || this.cursors.w.isDown || this.touchControls.up;
+    const moveDown = this.cursors.down.isDown || this.cursors.s.isDown || this.touchControls.down;
     if (moveLeft) {
       body.setVelocityX(-speed);
     } else if (moveRight) {
